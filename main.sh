@@ -24,6 +24,24 @@ title() {
 }
 export -f title
 
+chk_int() {
+	if [ -z "$(cat "$1")" ]; then
+		echo "0" > "$1"
+	fi
+
+	if [ $(cat "$1") -lt $(( $(date +%s) - $2 )) ]; then
+		echo "$(date +%s)" > $1
+		return 0
+	fi
+	return 1
+}
+export -f chk_int
+
+pass() {
+	echo -n ""
+}
+export -f pass
+
 while getopts 'c:v' OPTION; do
 	case "$OPTION" in
 		c)
@@ -48,3 +66,5 @@ verbose "CONFIGDIR=$AA_CONFIGDIR"
 SCRIPTBIN="$(dirname $(realpath $0))"
 $SCRIPTBIN/scripts/go_latest_release
 $SCRIPTBIN/scripts/find_repos
+
+title Done

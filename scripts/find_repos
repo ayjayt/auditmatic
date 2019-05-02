@@ -9,13 +9,13 @@ touch "$REPOS_TS"
 touch "$REPOS_TRACKED"
 touch "$REPOS_IGNORED"
 
-if [ -z "$(cat "$REPOS_TS")" ]; then
-	echo "0" > "$REPOS_TS"
+if chk_int "$REPOS_TS" "60*60*2"; then
+	pass
+else
+	echo "Skipping..."
+	exit 0
 fi
-
-if [ $(cat "$REPOS_TS") -lt $(( $(date +%s) - 60*2 )) ]; then
-	echo "$(date +%s)" > $REPOS_TS
-fi
+	
 
 ALL_MY_REPOS=$(find $HOME \( -path "*/.git/*" -o -path "$HOME/go/src" \) -prune -o -type d -name ".git" -exec dirname {} \;)
 
@@ -31,7 +31,7 @@ gitcheck() {
 
 while read -r LINE; do
 	if grep "$REPOS_IGNORED" -qe "${LINE}"; then
-		echo -n "" # Silent Pass
+		pass
 	elif grep "$REPOS_TRACKED" -qe "${LINE}"; then
 		OUTPUT="$(gitcheck "${LINE}")"
 		if [ -n "${OUTPUT}" ]; then
