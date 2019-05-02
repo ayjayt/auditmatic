@@ -4,12 +4,12 @@ title find_repos
 
 REPOS_TRACKED="$AA_CONFIGDIR/repos_tracked"
 REPOS_IGNORED="$AA_CONFIGDIR/repos_ignored"
-REPOS_TS="$AA_CONFIGDIR/repos_ignored"
+REPOS_TS="$AA_CONFIGDIR/repos_ts"
 touch "$REPOS_TS"
 touch "$REPOS_TRACKED"
 touch "$REPOS_IGNORED"
 
-if chk_int "$REPOS_TS" "60*60*2"; then
+if chk_int "$REPOS_TS" "60*60*2" || chk_all; then
 	pass
 else
 	echo "Skipping..."

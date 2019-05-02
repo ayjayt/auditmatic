@@ -1,7 +1,9 @@
 #!/bin/bash
 
 usage() {
-	echo "USAGE: "$'\t'"$(basename $0) [-c CONFIG_DIR]"
+	echo "USAGE: "$'\t'"$(basename $0) [-c CONFIG_DIR] [-a] [-v]"
+	echo "-v : verbose output"
+	echo "-a : do all even if not time yet"
 }
 
 verbose() {
@@ -42,8 +44,20 @@ pass() {
 }
 export -f pass
 
-while getopts 'c:v' OPTION; do
+chk_all() {
+	if [ "$AA_ALL" = "true" ]; then
+		return 0
+	else
+		return 1
+	fi
+}
+export -f chk_all
+
+while getopts 'c:va' OPTION; do
 	case "$OPTION" in
+		a)
+			export AA_ALL=true
+			;;
 		c)
 			export AA_CONFIGDIR="${OPTARG}"
 			;;
@@ -67,5 +81,6 @@ SCRIPTBIN="$(dirname $(realpath $0))/scripts/"
 
 ${SCRIPTBIN}/go_latest_release 
 ${SCRIPTBIN}/find_repos
+${SCRIPTBIN}/update
 
 title Done 
