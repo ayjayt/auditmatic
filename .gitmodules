@@ -1,0 +1,3 @@
+[submodule "terminal-to-html"]
+	path = deps/terminal-to-html
+	url = https://github.com/buildkite/terminal-to-html
