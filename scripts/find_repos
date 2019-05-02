@@ -1,0 +1,47 @@
+#!/bin/bash
+
+title find_repos
+
+REPOS_TRACKED="$AA_CONFIGDIR/repos_tracked"
+REPOS_IGNORED="$AA_CONFIGDIR/repos_ignored"
+touch "$REPOS_TRACKED"
+touch "$REPOS_IGNORED"
+
+ALL_MY_REPOS=$(find $HOME \( -path "*/.git/*" -o -path "$HOME/go/src" \) -prune -o -type d -name ".git" -exec dirname {} \;)
+
+gitcheck() {
+		git -C ${1} status --short
+		if [ -n "$(git -C ${1} remote)" ]; then
+			git -C ${1} fetch --all | grep -v "Fetching origin"
+		fi
+		if [ -n "$(git -C ${1} diff HEAD @{upstream})" ]; then
+			echo "HEAD and UPSTREAM have differences"
+		fi
+}
+while read -r LINE; do
+	if grep "$REPOS_IGNORED" -e "${LINE}"; then
+		echo -n "" # Silent Pass
+	elif grep "$REPOS_TRACKED" -e "${LINE}"; then
+		gitcheck "${LINE}"
+	else
+		NEWREPOS+="$LINE"$'\n'
+	fi
+done <<< "$ALL_MY_REPOS"
+for REPO in $NEWREPOS; do
+	echo "$REPO"
+	gitcheck $REPO
+	select opt in TRACK IGNORE; do
+		case $opt in
+			"TRACK")
+				echo "$REPO" >> $REPOS_TRACKED
+				;;
+			"IGNORE")
+				echo "$REPO" >> $REPOS_IGNORED
+				;;
+			*)
+				echo "Invalid Response"
+				;;
+		esac
+		break
+	done
+done
