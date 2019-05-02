@@ -8,12 +8,16 @@ auditmatic is a set of bashscripts used to facilitate system maintenance
 
 ## config
 
-* scripts at regular intervals # use sleep
-- time management
-- use a folder to store config info
+There is a main script that runs, `main.sh`, and it is set to run scripts in `scripts`.
+It may run them in a loop @ a certain sleep interval
+It may run them immediately. If they run immediately, they can decide themselves whether or not they should update.
+Use autodocker as a basic idea of how to create command line programs.
 
-## TODO:
+## todo
 
-has golang been updated
-`git ls-remote --tags git://github.com/
-
+write minutes() and hours() and days() and weeks() all to convert to sections to a sleep loop.
+It store pids of its children, but disown them, and then be allowed to kill and restart them
+Something to check and list git repositories
+Something to check updates
+Something to check logs
+Something to hook into multiple systems
