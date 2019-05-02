@@ -15,21 +15,24 @@ gitcheck() {
 			git -C ${1} fetch --all | grep -v "Fetching origin"
 		fi
 		if [ -n "$(git -C ${1} diff HEAD @{upstream})" ]; then
-			echo "HEAD and UPSTREAM have differences"
+			git -C ${1} status | head -n 2 | tail -n 1
 		fi
 }
 while read -r LINE; do
-	if grep "$REPOS_IGNORED" -e "${LINE}"; then
+	if grep "$REPOS_IGNORED" -qe "${LINE}"; then
 		echo -n "" # Silent Pass
-	elif grep "$REPOS_TRACKED" -e "${LINE}"; then
-		gitcheck "${LINE}"
+	elif grep "$REPOS_TRACKED" -qe "${LINE}"; then
+		OUTPUT="$(gitcheck "${LINE}")"
+		if [ -n "${OUTPUT}" ]; then
+			echo -e "${BOLD}${LINE}${NORM}"
+			echo -e "$OUTPUT"
+		fi
 	else
 		NEWREPOS+="$LINE"$'\n'
 	fi
 done <<< "$ALL_MY_REPOS"
 for REPO in $NEWREPOS; do
-	echo "$REPO"
-	gitcheck $REPO
+		echo -e "$REPO"
 	select opt in TRACK IGNORE; do
 		case $opt in
 			"TRACK")

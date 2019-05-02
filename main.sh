@@ -15,8 +15,12 @@ err() {
 	exit 1
 }
 
+export BOLD="$(tput bold)"
+export NORM="$(tput sgr0)"
+
+
 title() {
-	echo -e "\n\n*****$1******\n"
+	echo -e "\n\n$BOLD*****$1******$NORM\n"
 }
 export -f title
 
