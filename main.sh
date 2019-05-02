@@ -82,5 +82,6 @@ SCRIPTBIN="$(dirname $(realpath $0))/scripts/"
 ${SCRIPTBIN}/go_latest_release 
 ${SCRIPTBIN}/find_repos
 ${SCRIPTBIN}/update
+${SCRIPTBIN}/system_status
 
 title Done 
