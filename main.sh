@@ -52,7 +52,13 @@ chk_all() {
 	fi
 }
 export -f chk_all
-
+new_sleeper() {
+	AA_SLEEPER="true" ${0} ${ORIG_OPTS} &> /dev/null &
+	SLEEPER_PID=$!
+	echo "${SLEEPER_PID}" > "$AA_CONFIGDIR/sleeper_pid"
+	disown ${SLEEPER_PID}
+}
+ORIG_OPTS="${@}"
 while getopts 'c:va' OPTION; do
 	case "$OPTION" in
 		a)
@@ -62,7 +68,7 @@ while getopts 'c:va' OPTION; do
 			export AA_CONFIGDIR="${OPTARG}"
 			;;
 		v)
-			AA_VERBOSE=true
+				AA_VERBOSE=true
 			;;
 		?)
 			usage
@@ -76,7 +82,27 @@ fi
 
 mkdir -p $AA_CONFIGDIR
 
+if [ "$AA_SLEEPER" = "true" ]; then
+	if [ ! $(cat "$AA_CONFIGDIR/ts") -lt $(( $(date +%s) - 4 )) ]; then
+		sleep 1
+		new_sleeper
+		exit 0	
+	else
+		pass
+	fi
+fi
+
+if [ -f "$AA_CONFIGDIR/sleeper_pid" -a ! "${AA_SLEEPER}" = "true" ]; then
+	echo "Killing $(cat ${AA_CONFIGDIR}/sleeper_pid)"
+	kill -KILL $(cat "${AA_CONFIGDIR}/sleeper_pid") &> /dev/null
+	sleep 1
+fi
+
+echo "$(date +%s)" > "$AA_CONFIGDIR/ts"
+new_sleeper
+
 verbose "CONFIGDIR=$AA_CONFIGDIR"	
+
 SCRIPTBIN="$(dirname $(realpath $0))/scripts/"
 
 ${SCRIPTBIN}/go_latest_release 

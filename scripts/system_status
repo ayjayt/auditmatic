@@ -1,13 +1,13 @@
 #!/bin/bash
 title system_status
 
-OUTPUT=$(systemctl list-units --state=failed --all &> 1)
-if [ -n "$OUTPUT" ]; then
+OUTPUT=$(systemctl list-units --state=failed --all 2>&1)
+if ! echo -e "$OUTPUT" | grep -qe "0 loaded units listed"; then
 	echo "${BOLD}Failed services:${NORM}"
 	echo -e "$OUTPUT"
 fi
 
-OUTPUT=$(journalctl -p 3 -xb)
+OUTPUT=$(journalctl -p 3 -xb -n 3)
 if ! echo "$OUTPUT" | tail -n 1 | grep -qe "-- No entries --"; then
 	echo "${BOLD}Issues in the log:${NORM}"
 	echo "$OUTPUT"
