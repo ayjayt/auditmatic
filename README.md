@@ -10,9 +10,9 @@ Actually not yet, the plan was to put to HTML but...
 
 ## What if the item should run at regular intervals?
 
-Something to check logs
+Something to check logs- logtail + etsy/logster
 Something to hook into multiple systems
-Something to send e-mails
+Something to send e-mails- configure gmail and...
 Format the output as HTML
 
 
