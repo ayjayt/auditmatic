@@ -1,0 +1,32 @@
+#!/bin/bash
+
+title update
+
+UPDATE_TS="$AA_CONFIGDIR/update_ts"
+touch "$UPDATE_TS"
+
+if chk_int "$UPDATE_TS" "60*60*24" || chk_all; then
+	pass
+else
+	echo "Skipping..."
+	exit 0
+fi
+
+sudo apt-get update
+
+if ! apt-get dist-upgrade --dry-run | tail -n 1 | grep -e "0 not upgraded"; then
+	apt list --upgradable
+	select opt in UPGRADE SKIP; do
+		case $opt in
+			"UPGRADE")
+				sudo apt-get dist-upgrade
+				;;
+			"SKIP")
+				;;
+			*)
+				echo "Invalid Response"
+				;;
+		esac
+		break
+	done
+fi
