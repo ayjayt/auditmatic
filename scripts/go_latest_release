@@ -1,0 +1,10 @@
+#!/bin/bash
+
+CAPTURE='(go[0-9]+.[0-9]+.[0-9]+)'
+REMOTE=$(git ls-remote --tags https://github.com/golang/go | awk '{print }' | grep refs/tags/go | cut -d '/' -f 3 | grep -E "$CAPTURE" | sort -t. -k 1,1n -k 2,2n -k 3,3n | tail -n 1)
+LOCAL=$(go version | grep -oE "$CAPTURE")
+if [ "$REMOTE" = "$LOCAL" ]; then
+	echo "Golang is up-to-date: $REMOTE"
+else
+	echo "Local golang is $LOCAL and remote available is $REMOTE"
+fi
