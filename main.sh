@@ -83,8 +83,8 @@ fi
 mkdir -p $AA_CONFIGDIR
 
 if [ "$AA_SLEEPER" = "true" ]; then
-	if [ ! $(cat "$AA_CONFIGDIR/ts") -lt $(( $(date +%s) - 4 )) ]; then
-		sleep 1
+	if [ ! $(cat "$AA_CONFIGDIR/ts") -lt $(( $(date +%s) - 60*60*24 )) ]; then
+		sleep 60*2
 		new_sleeper
 		exit 0	
 	else
