@@ -63,8 +63,9 @@ fi
 mkdir -p $AA_CONFIGDIR
 
 verbose "CONFIGDIR=$AA_CONFIGDIR"	
-SCRIPTBIN="$(dirname $(realpath $0))"
-$SCRIPTBIN/scripts/go_latest_release
-$SCRIPTBIN/scripts/find_repos
+SCRIPTBIN="$(dirname $(realpath $0))/scripts/"
 
-title Done
+${SCRIPTBIN}/go_latest_release 
+${SCRIPTBIN}/find_repos
+
+title Done 
