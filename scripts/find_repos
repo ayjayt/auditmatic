@@ -4,8 +4,18 @@ title find_repos
 
 REPOS_TRACKED="$AA_CONFIGDIR/repos_tracked"
 REPOS_IGNORED="$AA_CONFIGDIR/repos_ignored"
+REPOS_TS="$AA_CONFIGDIR/repos_ignored"
+touch "$REPOS_TS"
 touch "$REPOS_TRACKED"
 touch "$REPOS_IGNORED"
+
+if [ -z "$(cat "$REPOS_TS")" ]; then
+	echo "0" > "$REPOS_TS"
+fi
+
+if [ $(cat "$REPOS_TS") -lt $(( $(date +%s) - 60*2 )) ]; then
+	echo "$(date +%s)" > $REPOS_TS
+fi
 
 ALL_MY_REPOS=$(find $HOME \( -path "*/.git/*" -o -path "$HOME/go/src" \) -prune -o -type d -name ".git" -exec dirname {} \;)
 
@@ -18,6 +28,7 @@ gitcheck() {
 			git -C ${1} status | head -n 2 | tail -n 1
 		fi
 }
+
 while read -r LINE; do
 	if grep "$REPOS_IGNORED" -qe "${LINE}"; then
 		echo -n "" # Silent Pass
@@ -33,6 +44,7 @@ while read -r LINE; do
 done <<< "$ALL_MY_REPOS"
 for REPO in $NEWREPOS; do
 		echo -e "$REPO"
+		gitcheck "$REPO"
 	select opt in TRACK IGNORE; do
 		case $opt in
 			"TRACK")
