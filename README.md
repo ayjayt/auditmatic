@@ -20,5 +20,7 @@ Flags:
 Interactive
 HTML / Graphics
 contate or w/e
-
-
+git should detect if file has moved or w/e
+special option to watch branch activity
+what should id o with what it updates
+If git is... missing?
