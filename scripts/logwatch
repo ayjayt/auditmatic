@@ -1,0 +1,15 @@
+#!/bin/bash
+
+title update
+
+LOGWATCH_TS="$AA_CONFIGDIR/logwatch_ts"
+touch "$LOGWATCH_TS"
+
+if chk_int "$LOGWATCH_TS" "60*60*24" || chk_all; then
+	pass
+else
+	echo "Skipping..."
+	exit 0
+fi
+
+sudo /user/sbin/logwatch --range "since 24 hours ago for those hours"
