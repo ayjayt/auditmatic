@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ ! $AA_INTERACTIVE = "true" ]; then
+	exit
+fi
+
 title update
 
 UPDATE_TS="$AA_CONFIGDIR/update_ts"

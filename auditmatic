@@ -26,11 +26,13 @@ title() {
 }
 export -f title
 
+#chk_int checks if a certain amount of time has passed by looking at a timestamp in a file and seeing if its less than the current time minus a specified nuumber of seconds
 chk_int() {
+	# if the file is empty, set it to 0
 	if [ -z "$(cat "$1")" ]; then
 		echo "0" > "$1"
 	fi
-
+	# if it's less than the date minus a number of seconds specified, replace the date and return 0 (success)
 	if [ $(cat "$1") -lt $(( $(date +%s) - $2 )) ]; then
 		echo "$(date +%s)" > $1
 		return 0
@@ -52,13 +54,16 @@ chk_all() {
 	fi
 }
 export -f chk_all
+
+ORIG_OPTS="${@}"
+
 new_sleeper() {
 	AA_SLEEPER="true" ${0} ${ORIG_OPTS} &> /dev/null &
 	SLEEPER_PID=$!
 	echo "${SLEEPER_PID}" > "$AA_CONFIGDIR/sleeper_pid"
 	disown ${SLEEPER_PID}
 }
-ORIG_OPTS="${@}"
+
 while getopts 'c:va' OPTION; do
 	case "$OPTION" in
 		a)
@@ -76,23 +81,25 @@ while getopts 'c:va' OPTION; do
 			;;
 	esac
 done
+
 if [ -z "$AA_CONFIGDIR" ]; then
 	export AA_CONFIGDIR="$HOME/.auditmatic"
 fi
 
 mkdir -p $AA_CONFIGDIR
 
+export AA_INTERACTIVE=true
+
 if [ "$AA_SLEEPER" = "true" ]; then
-	if [ ! $(cat "$AA_CONFIGDIR/ts") -lt $(( $(date +%s) - 60*60*24 )) ]; then
+	if [ ! chk_int "$AA_CONFIGDIR/ts" $(( 60*60*24 )) ]; then
 		sleep 60*2
 		new_sleeper
 		exit 0	
 	else
-		pass
+		AA_SLEEPER=false	
+		AA_INTERACTIVE=false
 	fi
-fi
-
-if [ -f "$AA_CONFIGDIR/sleeper_pid" -a ! "${AA_SLEEPER}" = "true" ]; then
+elif [ -f "$AA_CONFIGDIR/sleeper_pid" ]; then
 	echo "Killing $(cat ${AA_CONFIGDIR}/sleeper_pid)"
 	kill -KILL $(cat "${AA_CONFIGDIR}/sleeper_pid") &> /dev/null
 	sleep 1

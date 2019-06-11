@@ -12,15 +12,11 @@ Actually not yet, the plan was to put to HTML but...
 
 Something to check logs- logtail + etsy/logster
 RDD... graphite
-Something to hook into multiple systems
+-- its going to be the google log mlog?
+-- system performance
+system monitor and stuff- system health, systemD
 Something to send e-mails- configure gmail and...
-Format the output as HTML
-Add non-interactive mode
-Flags:
-Interactive
-HTML / Graphics
-contate or w/e
-git should detect if file has moved or w/e
+Something to hook into multiple systems
+
 special option to watch branch activity
-what should id o with what it updates
-If git is... missing?
+what happens if something is removed

@@ -1,5 +1,7 @@
 #!/bin/bash
-
+if [ ! $AA_INTERACTIVE = "true" ]; then
+	exit
+fi
 title find_repos
 
 REPOS_TRACKED="$AA_CONFIGDIR/repos_tracked"
