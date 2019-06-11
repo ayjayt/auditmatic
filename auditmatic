@@ -99,21 +99,23 @@ export -f log
 
 
 if [ "$AA_SLEEPER" = "true" ]; then
-	if [ ! chk_int "$AA_CONFIGDIR/ts" $(( 60*60*24 )) ]; then
+	if chk_int "$AA_CONFIGDIR/ts" "60*60*24"; then
+		log "Waking up"
+		AA_SLEEPER=false
+		AA_INTERACTIVE=false
+	else
+		log "Going to sleep..."
 		sleep 60*2
+		log "Before exit, start a new sleeper..."
 		new_sleeper
 		exit 0	
-	else
-		AA_SLEEPER=false	
-		AA_INTERACTIVE=false
 	fi
 elif [ -f "$AA_CONFIGDIR/sleeper_pid" ]; then
 	log "Killing $(cat ${AA_CONFIGDIR}/sleeper_pid)"
 	kill -KILL $(cat "${AA_CONFIGDIR}/sleeper_pid") &> /dev/null
-	sleep 1
+	echo "" > "${AA_CONFIGDIR}/sleeper_pid"
 fi
-
-echo "$(date +%s)" > "$AA_CONFIGDIR/ts"
+echo "$(date +%s)" > $AA_CONFIGDIR/ts
 new_sleeper
 
 verbose "CONFIGDIR=$AA_CONFIGDIR"	
