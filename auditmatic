@@ -60,6 +60,7 @@ ORIG_OPTS="${@}"
 new_sleeper() {
 	AA_SLEEPER="true" ${0} ${ORIG_OPTS} &> /dev/null &
 	SLEEPER_PID=$!
+	log "Started sleeper ${SLEEPER_PID}"
 	echo "${SLEEPER_PID}" > "$AA_CONFIGDIR/sleeper_pid"
 	disown ${SLEEPER_PID}
 }
@@ -90,6 +91,13 @@ mkdir -p $AA_CONFIGDIR
 
 export AA_INTERACTIVE=true
 
+log() {
+	echo $(date  -u)"-$0-$$-$1" >> ${AA_CONFIGDIR}/log
+	tail -n 500 ${AA_CONFIGDIR}/log > ${AA_CONFIGDIR}/log
+}
+export -f log
+
+
 if [ "$AA_SLEEPER" = "true" ]; then
 	if [ ! chk_int "$AA_CONFIGDIR/ts" $(( 60*60*24 )) ]; then
 		sleep 60*2
@@ -100,7 +108,7 @@ if [ "$AA_SLEEPER" = "true" ]; then
 		AA_INTERACTIVE=false
 	fi
 elif [ -f "$AA_CONFIGDIR/sleeper_pid" ]; then
-	echo "Killing $(cat ${AA_CONFIGDIR}/sleeper_pid)"
+	log "Killing $(cat ${AA_CONFIGDIR}/sleeper_pid)"
 	kill -KILL $(cat "${AA_CONFIGDIR}/sleeper_pid") &> /dev/null
 	sleep 1
 fi
@@ -112,9 +120,16 @@ verbose "CONFIGDIR=$AA_CONFIGDIR"
 
 SCRIPTBIN="$(dirname $(realpath $0))/scripts/"
 
+log "go lastest"
 ${SCRIPTBIN}/go_latest_release 
+log "find repos"
 ${SCRIPTBIN}/find_repos
+log "update"
 ${SCRIPTBIN}/update
+log "system status"
 ${SCRIPTBIN}/system_status
+log "logwatch"
+${SCRIPTBIN}/logwatch
+
 
 title Done 
