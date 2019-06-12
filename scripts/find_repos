@@ -37,7 +37,7 @@ while read -r LINE; do
 	if grep "$REPOS_IGNORED" -qe "${LINE}"; then
 		pass
 	elif grep "$REPOS_TRACKED" -qe "${LINE}"; then
-		OUTPUT="$(gitcheck "${LINE}" 2> &1)"
+		OUTPUT="$(gitcheck "${LINE}" 2>&1)"
 		if [ -n "${OUTPUT}" ]; then
 			echo -e "${BOLD}${LINE}${NORM}"
 			echo -e "$OUTPUT"

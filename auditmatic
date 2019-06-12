@@ -125,9 +125,10 @@ new_sleeper
 
 verbose "CONFIGDIR=$AA_CONFIGDIR"	
 if [ -z "$SCRIPTBIN" ]; then
-	if [ -d "$(realpath $0)/scripts" ]; then
+	if [ -d "$(dirname $(realpath $0))/scripts" ]; then
 		export SCRIPTBIN="$(dirname $(realpath $0))/scripts/"
 	else
+		echo "Searched $(dirname $(realpath $0))/scripts"
 		err "This program relies on knowing where the scripts it shoudl run are. It requires either a SCRIPTBIN env var, or looks in the realpath of the executable for a scripts folder"
 	fi
 fi
