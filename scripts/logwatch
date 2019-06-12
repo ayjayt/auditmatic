@@ -5,7 +5,7 @@ title logwatch
 LOGWATCH_TS="$AA_CONFIGDIR/logwatch_ts"
 touch "$LOGWATCH_TS"
 
-sudo du -sh /var/log
+sudo $SUDOFLAG du -sh /var/log
 
 if chk_int "$LOGWATCH_TS" "60*60*06" || chk_all; then
 	pass
@@ -15,4 +15,4 @@ else
 fi
 
 
-sudo /usr/sbin/logwatch --range "since 24 hours ago for those hours"
+sudo $SUDOFLAG /usr/sbin/logwatch --range "since 24 hours ago for those hours"

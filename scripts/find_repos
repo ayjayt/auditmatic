@@ -1,7 +1,4 @@
 #!/bin/bash
-if [ ! $AA_INTERACTIVE = "true" ]; then
-	exit
-fi
 title find_repos
 
 REPOS_TRACKED="$AA_CONFIGDIR/repos_tracked"
@@ -22,12 +19,17 @@ fi
 ALL_MY_REPOS=$(find $HOME \( -path "*/.git/*" -o -path "$HOME/go/src" \) -prune -o -type d -name ".git" -exec dirname {} \;)
 
 gitcheck() {
-		git -C ${1} status --short
-		if [ -n "$(git -C ${1} remote)" ]; then
-			git -C ${1} fetch --all | grep -v "Fetching origin"
-		fi
-		if [ -n "$(git -C ${1} diff HEAD @{upstream})" ]; then
-			git -C ${1} status | head -n 2 | tail -n 1
+		if git -C ${1} status --short; then
+			if [ -n "$(git -C ${1} remote)" ]; then
+				git -C ${1} fetch --all | grep -v "Fetching origin"
+			else
+				echo "No remote"
+			fi
+			if [ -n "$(git -C ${1} diff HEAD @{upstream})" ]; then
+				git -C ${1} status | head -n 2 | tail -n 1
+			fi
+		else
+			sed -i "s/${1}\$//g" $REPOS_TRACKED
 		fi
 }
 
@@ -35,7 +37,7 @@ while read -r LINE; do
 	if grep "$REPOS_IGNORED" -qe "${LINE}"; then
 		pass
 	elif grep "$REPOS_TRACKED" -qe "${LINE}"; then
-		OUTPUT="$(gitcheck "${LINE}")"
+		OUTPUT="$(gitcheck "${LINE}" 2> &1)"
 		if [ -n "${OUTPUT}" ]; then
 			echo -e "${BOLD}${LINE}${NORM}"
 			echo -e "$OUTPUT"
@@ -44,6 +46,9 @@ while read -r LINE; do
 		NEWREPOS+="$LINE"$'\n'
 	fi
 done <<< "$ALL_MY_REPOS"
+if [ ! $AA_INTERACTIVE = "true" ]; then
+	exit
+fi
 for REPO in $NEWREPOS; do
 		echo -e "$REPO"
 		gitcheck "$REPO"

@@ -132,6 +132,10 @@ if [ -z "$SCRIPTBIN" ]; then
 	fi
 fi
 
+if [ ! "$AA_INTERACTVE" = "true" ]; then
+	export SUDOFLAG=' -n '
+fi
+
 log "go lastest"
 ${SCRIPTBIN}/go_latest_release 
 log "find repos"
