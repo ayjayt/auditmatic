@@ -1,0 +1,12 @@
+#!/bin/bash
+
+uname -a
+. /etc/os-release
+echo $PRETTY_NAME
+echo
+sudo $SUDOFLAG netstat -vatu
+echo
+echo "Users with ssh access:"
+awk -F':' '/ssh/{print $4}' /etc/group
+echo "Users with shells:"
+grep /etc/passwd -ve "/nologin" -e "/bin/false" | awk -F':' 'BEGIN {ORS=" "} {print $1}; END {ORS="\n"; print ""}'
