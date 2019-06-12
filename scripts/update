@@ -1,5 +1,4 @@
 #!/bin/bash
-
 if [ ! $AA_INTERACTIVE = "true" ]; then
 	exit
 fi
@@ -9,7 +8,7 @@ title update
 UPDATE_TS="$AA_CONFIGDIR/update_ts"
 touch "$UPDATE_TS"
 
-if chk_int "$UPDATE_TS" "60*60*24" || chk_all; then
+if chk_int "$UPDATE_TS" "60*60*20" || chk_all; then
 	pass
 else
 	echo "Skipping..."

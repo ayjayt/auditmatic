@@ -5,9 +5,9 @@ title logwatch
 LOGWATCH_TS="$AA_CONFIGDIR/logwatch_ts"
 touch "$LOGWATCH_TS"
 
-du -sh /var/log
+sudo du -sh /var/log
 
-if chk_int "$LOGWATCH_TS" "60*60*24" || chk_all; then
+if chk_int "$LOGWATCH_TS" "60*60*06" || chk_all; then
 	pass
 else
 	echo "Skipping..."
