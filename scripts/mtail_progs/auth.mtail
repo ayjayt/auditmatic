@@ -1,0 +1,35 @@
+#counter failed_auths by application, ip
+counter failed_auths_total
+
+# This is to count attacks such as the following:
+# Jun 12 15:59:19 ajpikul sshd[6276]: Failed password for root from 218.92.0.207 port 10824 ssh2
+
+# The `syslog' decorator defines a procedure.  When a block of mtail code is
+# "decorated", it is called before entering the block.  The block is entered
+# when the keyword `next' is reached.
+
+def syslog {
+  /^(?P<date>(?P<legacy_date>\w+\s+\d+\s+\d+:\d+:\d+)|(?P<rfc3339_date>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d+[+-]\d{2}:\d{2}))/ +
+  /\s+(?:\w+@)?(?P<hostname>[\w\.-]+)\s+(?P<application>[\w\.-]+)(?:\[(?P<pid>\d+)\])?:\s+(?P<message>.*)/ {
+    # If the legacy_date regexp matched, try this format.
+    len($legacy_date) > 0 {
+      strptime($2, "Jan _2 15:04:05")
+    }
+    # If the RFC3339 style matched, parse it this way.
+    len($rfc3339_date) > 0 {
+      strptime($rfc3339_date, "2006-01-02T03:04:05-0700")
+    }
+    # Call into the decorated block
+    next
+  }
+}
+
+@syslog {
+	/Failed password for (?P<user>.+) from (?P<ip>\d+\.\d+\.\d+\.\d+) port (?P<port>\d+) (?P<protocol>.+)$/ {
+#		failed_auths[$application, string($ip)]++
+		failed_auths_total++
+#		del failedauth[$application, string($ip)] after 24hrs
+#		I'd like this to reset the timer but I don't know if it does:w
+
+	}
+}

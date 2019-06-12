@@ -1,0 +1,14 @@
+#!/bin/bash
+title mtail
+
+MTAIL_TS="$AA_CONFIGDIR/mtail_ts"
+touch "$LOGWATCH_TS"
+
+if chk_int "$LOGWATCH_TS" "60*60*06" || chk_all; then
+	pass
+else
+	echo "Skipping..."
+	exit 0
+fi
+
+sudo mtail --one_shot --logs /var/log/auth.log --progs mtail_progs/
