@@ -47,13 +47,15 @@ I have a PR open to google/mtail that allows building outside of GOPATH
 
 **Why not run from systemd and use systemd timers?**
 
-Too much to learn, not interested. I know bash.
+There is too much to learn, not interested. I know bash.
 
 **Why not using CRON?**
 
-Because bash works fine. I like not distributing my audimatic over my system.
+Because bash works fine. I like not having to distribute my auditmatic over my system.
 
-## What if the item should run at regular intervals?
+With auditmatic, I can go to one folder and look at all this system awareness/maintenance stuff.
+
+## TODO
 
 * system monitor and stuff- resource usage, dmesg events
 * cron-like functions
