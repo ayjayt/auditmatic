@@ -3,10 +3,11 @@ auditmatic is a set of bashscripts used to facilitate system maintenance
 
 ## features
 
-Just read the scripts in scripts/
+I recommend reading the scripts in scripts/
 
+* basic sysinfo
 * latest release of software (golang only right now)
-* git repo trackinng updating/notification
+* git repo tracking updating/notification
 * asks systemd if anything has failed
 * logwatch and mtail (log summarizing and metric generating platform)
 * automatic check for updates debian
