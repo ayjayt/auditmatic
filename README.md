@@ -8,6 +8,13 @@ auditmatic is a set of bashscripts used to facilitate system maintenance
 
 Actually not yet, the plan was to put to HTML but...
 
+* mtail
+
+I have a PR open to google/mtail that allows building outside of GOPATH
+
+"Installing" means copying the mtail +x to a PATH folder after running `make`
+
+
 ## What if the item should run at regular intervals?
 
 Something to check logs- logtail + etsy/logster
