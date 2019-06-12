@@ -11,4 +11,4 @@ else
 	exit 0
 fi
 
-sudo mtail --one_shot --logs /var/log/auth.log --progs mtail_progs/
+sudo mtail --one_shot --logs /var/log/auth.log --progs ${SCRIPTBIN}mtail_progs/
