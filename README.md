@@ -7,6 +7,7 @@ Just read the scripts in scripts/
 
 * latest release of software (golang only right now)
 * git repo trackinng updating/notification
+* asks systemd if anything has failed
 * logwatch and mtail (log summarizing and metric generating platform)
 * automatic check for updates debian
 
