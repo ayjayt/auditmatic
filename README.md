@@ -13,9 +13,18 @@ Just read the scripts in scripts/
 
 ## build
 
-First of all, you can run it from the repo, and it will try to run the scripts. The scripts themselvees will describe whether or not they have their required dependencies and permissions.
+First of all, you can run it from the repo, and it will try to run the scripts. The scripts themselves will describe whether or not they have their required dependencies and permissions.
 
-You can install dependencies for the scripts you want, create permissions to have the script run with/out sudo, etc.
+You can install dependencies for the scripts you want- the scripts themselves will indicate if they can run.
+
+You can create permissions to have the script run with/out sudo, etc- you do this in with `visudo`, my file is as follows:
+```
+userName ALL=(ALL) NOPASSWD: /usr/sbin/logwatch
+userName ALL=(ALL) NOPASSWD: /usr/bin/du
+userName ALL=(ALL) NOPASSWD: /home/userName/go/bin/mtail
+```
+This allows certain commands to be run automatically
+
 
 To install the program, I just softlinked to the binary from my local bin/
 
