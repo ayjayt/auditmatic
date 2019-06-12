@@ -17,13 +17,12 @@ I have a PR open to google/mtail that allows building outside of GOPATH
 
 ## What if the item should run at regular intervals?
 
-Something to check logs- logtail + etsy/logster
-RDD... graphite
--- its going to be the google log mlog?
--- system performance
-system monitor and stuff- system health, systemD
+system monitor and stuff- resource usage, dmesg events
+mtail statefulness:w
+cron-like functions
+- maximum and minimum frequency specifications, event driven, 
+- system news
 Something to send e-mails- configure gmail and...
 Something to hook into multiple systems
 
-special option to watch branch activity
-what happens if something is removed
+what happens if something is removed from git... better git status with push
