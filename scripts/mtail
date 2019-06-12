@@ -4,6 +4,8 @@ title mtail
 MTAIL_TS="$AA_CONFIGDIR/mtail_ts"
 touch "$LOGWATCH_TS"
 
+command -v mtail &> /dev/null || { echo "mtail is a required dependency for ${0}"; exit; }
+
 if chk_int "$LOGWATCH_TS" "60*60*06" || chk_all; then
 	pass
 else

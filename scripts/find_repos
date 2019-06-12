@@ -8,6 +8,8 @@ touch "$REPOS_TS"
 touch "$REPOS_TRACKED"
 touch "$REPOS_IGNORED"
 
+command -v git &> /dev/null || { echo "Git is a required dependency for ${0}"; exit; }
+
 if chk_int "$REPOS_TS" "60*60*2" || chk_all; then
 	pass
 else
