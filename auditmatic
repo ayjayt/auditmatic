@@ -149,6 +149,8 @@ log "system status"
 ${SCRIPTBIN}/system_status
 log "logwatch"
 ${SCRIPTBIN}/logwatch
+log "mtail"
+${SCRIPTBIN}/mtail
 
 
 title Done 
