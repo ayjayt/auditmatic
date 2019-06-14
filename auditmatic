@@ -113,7 +113,7 @@ if [ "$AA_SLEEPER" = "true" ]; then
 		AA_INTERACTIVE=false
 	else
 		log "Going to sleep..."
-		sleep 60*2
+		sleep $((60*60*24))
 		log "Before exit, start a new sleeper..."
 		new_sleeper
 		exit 0	
