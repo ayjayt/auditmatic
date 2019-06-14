@@ -64,3 +64,15 @@ With auditmatic, I can go to one folder and look at all this system awareness/ma
 * Something to send e-mails- configure gmail and...
 * Something to hook into multiple systems
 * what happens if something is removed from git... better git status with push
+
+* Logwatchy stuff: ban ports, ban IPs for a certain length of time consecutively, filter the disconnects, just count if < 6 and sum- if you ban an IP get a geolocation or information aboutA
+* Also, cover its installation and disabled exim
+
+## Go/C Refactor
+
+* The program will be refactored to either go or C. 
+* The README will be cleared up to demonstrate intent as a polling systemd/cron.
+* SSH w/ basic multiplexing through libssh or x/crypto/ssh
+* as well config files, probably YAML- minfreq, maxfreq, digest=this|then|whatever... even notification?, poll=true
+* put something in your bashrc to run it
+* grpc is good
