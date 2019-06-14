@@ -32,13 +32,16 @@ export -f title
 chk_int() {
 	# if the file is empty, set it to 0
 	if [ -z "$(cat "$1")" ]; then
+		log "chk_int: no date present"
 		echo "0" > "$1"
 	fi
 	# if it's less than the date minus a number of seconds specified, replace the date and return 0 (success)
 	if [ $(cat "$1") -lt $(( $(date +%s) - $2 )) ]; then
 		echo "$(date +%s)" > $1
+		log "chk_int: time passed mark"
 		return 0
 	fi
+	log "chk_int: time not passed mark"
 	return 1
 }
 export -f chk_int
@@ -98,7 +101,7 @@ export AA_INTERACTIVE=true
 
 log() {
 	echo $(date  -u)"-$0-$$-$1" >> ${AA_CONFIGDIR}/log
-	tail -n 500 ${AA_CONFIGDIR}/log > ${AA_CONFIGDIR}/log
+	echo -e "$(tail -n 500 ${AA_CONFIGDIR}/log)" > ${AA_CONFIGDIR}/log
 }
 export -f log
 
