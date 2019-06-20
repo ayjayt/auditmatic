@@ -8,6 +8,7 @@ I keep it in my bashrc.
 I recommend reading the scripts in scripts/
 
 Info it provides:
+
 * basic sysinfo
 * latest release of software (golang only right now)
 * git repo tracking updating/notification
@@ -21,12 +22,16 @@ First of all, you can run it from the repo, and it will try to run the scripts. 
 
 You can install dependencies for the scripts you want- the scripts themselves will indicate if they can run.
 
-You can create permissions to have the script run with/out sudo, etc- you do this in with `visudo`, my file is as follows:
+You can create permissions to have the script run with/out sudo, etc- you do this in with `visudo`, my file is as follows:    
+  
+  
+
 ```
 userName ALL=(ALL) NOPASSWD: /usr/sbin/logwatch
 userName ALL=(ALL) NOPASSWD: /usr/bin/du
 userName ALL=(ALL) NOPASSWD: /home/userName/go/bin/mtail
 ```
+
 This allows certain commands to be run automatically
 
 
