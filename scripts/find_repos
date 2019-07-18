@@ -18,7 +18,7 @@ else
 fi
 	
 
-ALL_MY_REPOS=$(find $HOME \( -path "*/.git/*" -o -path "$HOME/go/src" \) -prune -o -type d -name ".git" -exec dirname {} \;)
+ALL_MY_REPOS=$(find $HOME \( -path "*/.git/*" -o -path "$HOME/go/*" \) -prune -o -type d -name ".git" -exec dirname {} \;)
 
 gitcheck() {
 		if git -C ${1} status --short; then
