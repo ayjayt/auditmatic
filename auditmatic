@@ -144,6 +144,8 @@ log "basic"
 ${SCRIPTBIN}/basic
 log "go lastest"
 ${SCRIPTBIN}/go_latest_release 
+log "domains"
+${SCRIPTBIN}/ssl
 log "find repos"
 ${SCRIPTBIN}/find_repos
 log "update"
@@ -154,6 +156,7 @@ log "logwatch"
 ${SCRIPTBIN}/logwatch
 log "mtail"
 ${SCRIPTBIN}/mtail
+
 
 
 title Done 
