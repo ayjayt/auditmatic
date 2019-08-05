@@ -1,6 +1,5 @@
 #!/bin/bash
 
-reset
 
 usage() {
 	echo "USAGE: "$'\t'"$(basename $0) [-c CONFIG_DIR] [-a] [-v]"
