@@ -17,6 +17,44 @@ else
 	exit 0
 fi
 	
+for line in $(cat $REPOS_TRACKED); do
+	if [ -n "$line" ] && [ ! -d "$line" ]; then
+		echo "$line in REPOS_TRACKED doesn't seem to be a repo"
+		select opt in DELETE IGNORE; do
+			case $opt in
+				"DELETE")
+					sed -i "s/${line}\$//g" $REPOS_TRACKED
+					;;
+				"IGNORE")
+					;;
+				*)
+					echo "Invalid Response"
+					;;
+			esac
+			break
+		done
+	fi
+done
+
+for line in $(cat $REPOS_IGNORED); do
+	if [ -n "$line" ] && [ ! -d "$line" ]; then
+		echo "$line in REPOS_IGNORED doesn't seem to be a repo"
+		select opt in DELETE IGNORE; do
+			case $opt in
+				"DELETE")
+					sed -i "s/${line}\$//g" $REPOS_IGNORED
+					;;
+				"IGNORE")
+					pass
+					;;
+				*)
+					echo "Invalid Response"
+					;;
+			esac
+			break
+		done
+	fi
+done 
 
 ALL_MY_REPOS=$(find $HOME \( -path "*/.git/*" -o -path "$HOME/go/*" \) -prune -o -type d -name ".git" -exec dirname {} \;)
 
@@ -41,9 +79,9 @@ gitcheck() {
 }
 
 while read -r LINE; do
-	if grep "$REPOS_IGNORED" -qe "\^${LINE}\$"; then
+	if grep "$REPOS_IGNORED" -qe '^'"${LINE}"'$'; then
 		pass
-	elif grep "$REPOS_TRACKED" -qe "${LINE}"; then
+	elif grep "$REPOS_TRACKED" -qe '^'"${LINE}"'$'; then
 		OUTPUT="$(gitcheck "${LINE}" 2>&1)"
 		if [ -n "${OUTPUT}" ]; then
 			echo -e "${BOLD}${LINE}${NORM}"
@@ -53,6 +91,7 @@ while read -r LINE; do
 		NEWREPOS+="$LINE"$'\n'
 	fi
 done <<< "$ALL_MY_REPOS"
+echo "You can browse lists in: $REPOS_TRACKED and $REPOS_IGNORED"
 
 if [ ! $AA_INTERACTIVE = "true" ]; then
 	exit
