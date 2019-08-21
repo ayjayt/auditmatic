@@ -11,4 +11,5 @@ if [ "$REMOTE" = "$LOCAL" ]; then
 	echo "Golang is up-to-date: $REMOTE"
 else
 	echo "Local golang is $LOCAL and remote available is $REMOTE"
+	echo "golang.org/doc/install"
 fi
