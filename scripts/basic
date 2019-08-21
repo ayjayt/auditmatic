@@ -4,9 +4,6 @@ uname -a
 . /etc/os-release
 echo $PRETTY_NAME
 echo
-echo "I think this is too verbose:"
-sudo $SUDOFLAG netstat -vatu
-echo "I think this is better:"
 sudo $SUDOFLAG netstat -plunt
 echo
 echo "Users with ssh access:"

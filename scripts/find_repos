@@ -26,9 +26,14 @@ gitcheck() {
 				git -C ${1} fetch --all | grep -v "Fetching origin"
 			else
 				echo "No remote"
+				return
 			fi
-			if [ -n "$(git -C ${1} diff HEAD @{upstream})" ]; then
-				git -C ${1} status | head -n 2 | tail -n 1
+			if git --no-pager -C ${1} diff HEAD @{upstream} &> /dev/null ; then
+				if [ -n "$(git -C ${1} diff HEAD @{upstream})" ]; then
+					git -C ${1} status | head -n 2 | tail -n 1
+				fi
+			else 
+				echo "This repo is in a detached head state, either a submodule or the working tree is checked out"
 			fi
 		else
 			sed -i "s/${1}\$//g" $REPOS_TRACKED
@@ -36,7 +41,7 @@ gitcheck() {
 }
 
 while read -r LINE; do
-	if grep "$REPOS_IGNORED" -qe "${LINE}"; then
+	if grep "$REPOS_IGNORED" -qe "\^${LINE}\$"; then
 		pass
 	elif grep "$REPOS_TRACKED" -qe "${LINE}"; then
 		OUTPUT="$(gitcheck "${LINE}" 2>&1)"
@@ -48,6 +53,7 @@ while read -r LINE; do
 		NEWREPOS+="$LINE"$'\n'
 	fi
 done <<< "$ALL_MY_REPOS"
+
 if [ ! $AA_INTERACTIVE = "true" ]; then
 	exit
 fi
