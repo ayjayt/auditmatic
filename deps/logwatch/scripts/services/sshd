@@ -262,6 +262,7 @@ while (defined(my $ThisLine = <STDIN>)) {
        ($ThisLine =~ m/^Connection closed by/) or
        ($ThisLine =~ m/^Disconnecting: Change of username or service /) or
        ($ThisLine =~ m/^error: maximum authentication attempts exceeded/) or
+       ($ThisLine =~ m/^Unable to negotiate with .+ no matching host key type found/) or
        ($ThisLine =~ m/^error: Received disconnect from/) or
        ($ThisLine =~ m/^Unable to negotiate with .+ no matching cipher found/) or
        ($ThisLine =~ m/^Connection reset by/) or
