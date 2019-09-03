@@ -79,3 +79,8 @@ With auditmatic, I can go to one folder and look at all this system awareness/ma
 * save last bash outout along with last run for each program for a certain lenght of time
 * put something in your bashrc to run it
 * grpc is good
+
+## TODO:
+
+* Make template
+* ufw logs

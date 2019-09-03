@@ -143,6 +143,8 @@ fi
 
 log "basic"
 ${SCRIPTBIN}/basic
+log "ufw"
+${SCRIPTBIN}/ufw
 log "go lastest"
 ${SCRIPTBIN}/go_latest_release 
 log "domains"

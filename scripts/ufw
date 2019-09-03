@@ -1,0 +1,4 @@
+#!/bin/bash
+title ufw
+sudo $SUDOFLAG ufw status verbose
+echo "ufw deny [from ip]; ufw allow [ssh|http|https|8050]; ufw delete [RULE]"
