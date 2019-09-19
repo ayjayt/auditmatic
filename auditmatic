@@ -29,8 +29,23 @@ title() {
 }
 export -f title
 
+#bad_exit is trapped by SIGINT/SIGHUP to provide a state variable before exit
+function bad_exit {
+	AA_INT_GOOD_EXIT=false
+	exit 1
+}
+#write_int just writes the current time to the time stamp file. It's it own function so it can be used with trap
+function write_int {
+	if [ "$AA_INT_GOOD_EXIT" = "true" ]; then
+		echo "$(date +%s)" > $AA_TIMESTAMP_FILE
+	fi
+	unset AA_TIMESTAMP_FILE
+}
+export -f write_int
+
 #chk_int checks if a certain amount of time has passed by looking at a timestamp in a file and seeing if its less than the current time minus a specified nuumber of seconds
 chk_int() {
+	AA_INT_GOOD_EXIT=true
 	# if the file is empty, set it to 0
 	if [ -z "$(cat "$1")" ]; then
 		log "chk_int: no date present"
@@ -38,7 +53,10 @@ chk_int() {
 	fi
 	# if it's less than the date minus a number of seconds specified, replace the date and return 0 (success)
 	if [ $(cat "$1") -lt $(( $(date +%s) - $2 )) ]; then
-		echo "$(date +%s)" > $1
+		export AA_TIMESTAMP_FILE="$1"
+		trap bad_exit SIGINT
+		trap bad_exit SIGHUP
+		trap write_int EXIT
 		log "chk_int: time passed mark"
 		return 0
 	fi
