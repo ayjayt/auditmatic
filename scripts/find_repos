@@ -23,7 +23,7 @@ for line in $(cat $REPOS_TRACKED); do
 		select opt in DELETE IGNORE; do
 			case $opt in
 				"DELETE")
-					sed -i "s/${line}\$//g" $REPOS_TRACKED
+					sed -i "s!${line}\$!!g" $REPOS_TRACKED
 					;;
 				"IGNORE")
 					;;
@@ -42,7 +42,7 @@ for line in $(cat $REPOS_IGNORED); do
 		select opt in DELETE IGNORE; do
 			case $opt in
 				"DELETE")
-					sed -i "s/${line}\$//g" $REPOS_IGNORED
+					sed -i "s!${line}\$!!g" $REPOS_IGNORED
 					;;
 				"IGNORE")
 					pass
