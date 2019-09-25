@@ -114,3 +114,4 @@ for REPO in $NEWREPOS; do
 		break
 	done
 done
+exit0

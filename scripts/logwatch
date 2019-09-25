@@ -19,3 +19,4 @@ fi
 
 
 sudo $SUDOFLAG /usr/sbin/logwatch --range "since 24 hours ago for those hours"
+exit0

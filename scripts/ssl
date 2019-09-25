@@ -18,3 +18,5 @@ command -v domanager &> /dev/null || { echo "Git is a required dependency for ${
 echo '
 `certbot -d ajpikul.com,*.ajpikul.com --manual --preferred-challenges certonly`
 `certbot renew` might work? certs must be readable'
+
+exit0

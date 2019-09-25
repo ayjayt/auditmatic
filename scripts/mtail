@@ -14,3 +14,4 @@ else
 fi
 
 sudo $SUDOFLAG mtail --one_shot --logs /var/log/auth.log --progs ${SCRIPTBIN}/mtail_progs/
+exit0
