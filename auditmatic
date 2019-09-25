@@ -34,6 +34,9 @@ function exit0 {
 	AA_INT_GOOD_EXIT=true
 	exit 0
 }
+
+export -f exit0
+
 #write_int just writes the current time to the time stamp file. It's it own function so it can be used with trap
 function write_int {
 	if [ "$AA_INT_GOOD_EXIT" != "true" ]; then
