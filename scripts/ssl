@@ -16,7 +16,8 @@ command -v domanager &> /dev/null || { echo "Git is a required dependency for ${
 
 ( cd $AA_CONFIGDIR && domanager )
 echo '
-`certbot -d ajpikul.com,*.ajpikul.com --manual --preferred-challenges certonly`
-`certbot renew` might work? certs must be readable'
-
-exit0
+`certbot -d ajpikul.com,*.ajpikul.com --manual --preferred-challenges dns certonly`
+add a txt record to domain (takes longer than ttl)
+then make the new certs readable
+'
+exit 0
