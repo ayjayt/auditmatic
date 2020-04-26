@@ -62,6 +62,7 @@ With auditmatic, I can go to one folder and look at all this system awareness/ma
 
 ## TODO
 
+* up key always breaks
 * system monitor and stuff- resource usage, dmesg events
 * Something to send e-mails- configure gmail and...
 * Something to hook into multiple system
