@@ -44,9 +44,7 @@ To install the program, I just softlinked to the binary from my local bin/
 * logwatch
 * mtail- a git module if you want it
 
-I have a PR open to google/mtail that allows building outside of GOPATH
-
-"Installing" means copying the mtail +x to a PATH folder after running `make`
+"Installing" mtail means copying the mtail +x to a PATH folder after running `make`
 
 ## Why?
 
@@ -65,6 +63,8 @@ With auditmatic, I can go to one folder and look at all this system awareness/ma
 * up key always breaks
 * system monitor and stuff- resource usage, dmesg events
 * Something to send e-mails- configure gmail and...
+* Make template
+* ufw logs
 * Something to hook into multiple system
 * what happens if something is removed from git... better git status with push
 * The README will be cleared up to demonstrate intent as a polling systemd/cron.
@@ -80,8 +80,3 @@ With auditmatic, I can go to one folder and look at all this system awareness/ma
 * save last bash outout along with last run for each program for a certain lenght of time
 * put something in your bashrc to run it
 * grpc is good
-
-## TODO:
-
-* Make template
-* ufw logs
