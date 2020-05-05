@@ -168,6 +168,8 @@ log "ufw"
 ${SCRIPTBIN}/ufw
 log "go lastest"
 ${SCRIPTBIN}/go_latest_release 
+log "nomad"
+${SCRIPTBIN}/nomad
 log "domains"
 ${SCRIPTBIN}/ssl
 log "find repos"

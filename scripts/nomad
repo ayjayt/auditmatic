@@ -1,0 +1,31 @@
+#!/bin/bash
+title nomad
+
+CERTS="$AA_CONFIGDIR/nomadssl.conf"
+
+command -v nomad &> /dev/null || { echo "nomad is a required dependency for ${0}"; exit; }
+
+if [ -e "$CERTS" ]; then
+	. "$CERTS"
+else
+	echo "No file describing certs found for nomad"
+	exit
+fi
+if [ ! -e "$NOMAD_CLIENT_CERT" ]; then
+	echo "No client cert found"
+	exit
+fi
+if [ ! -e "$NOMAD_CLIENT_KEY" ]; then
+	echo "No client key found"
+	exit
+fi
+if [ ! -e "$NOMAD_CACERT" ]; then
+	echo "No ca cert found"
+	exit
+fi
+
+print Servers
+nomad server members
+
+print Clients
+nomad node status

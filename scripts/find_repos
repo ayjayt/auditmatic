@@ -17,6 +17,7 @@ else
 	log "FAST!"
 	FAST=true
 fi
+
 if [ "${FAST}" = "false" ]; then	
 	for line in $(cat $REPOS_TRACKED); do
 		if [ -n "$line" ] && [ ! -d "$line" ]; then
