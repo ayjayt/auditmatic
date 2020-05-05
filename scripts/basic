@@ -6,6 +6,9 @@ echo $PRETTY_NAME
 echo
 sudo $SUDOFLAG netstat -plunt
 echo
+echo "who?- maybe need sudo?"
+who
+echo
 echo "Users with ssh access:"
 awk -F':' '/ssh/{print $4}' /etc/group
 echo "Users with shells:"

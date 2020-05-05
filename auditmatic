@@ -164,6 +164,8 @@ fi
 
 log "basic"
 ${SCRIPTBIN}/basic
+log "tmux"
+${SCRIPTBIN}/tmux
 log "ufw"
 ${SCRIPTBIN}/ufw
 log "go lastest"
