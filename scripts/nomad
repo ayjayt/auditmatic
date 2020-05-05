@@ -1,5 +1,5 @@
 #!/bin/bash
-title nomad
+title Nomad
 
 CERTS="$AA_CONFIGDIR/nomadssl.conf"
 
@@ -24,8 +24,8 @@ if [ ! -e "$NOMAD_CACERT" ]; then
 	exit
 fi
 
-title Servers
+title "Nomad Servers"
 nomad server members
 
-title Clients
+title "Nomad Clients"
 nomad node status
