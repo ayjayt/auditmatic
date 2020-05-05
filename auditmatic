@@ -164,22 +164,22 @@ fi
 
 log "basic"
 ${SCRIPTBIN}/basic
-#log "ufw"
-#${SCRIPTBIN}/ufw
-#log "go lastest"
-#${SCRIPTBIN}/go_latest_release 
-#log "domains"
-#${SCRIPTBIN}/ssl
+log "ufw"
+${SCRIPTBIN}/ufw
+log "go lastest"
+${SCRIPTBIN}/go_latest_release 
+log "domains"
+${SCRIPTBIN}/ssl
 log "find repos"
 ${SCRIPTBIN}/find_repos
-#log "update"
-#${SCRIPTBIN}/update
-#log "system status"
-#${SCRIPTBIN}/system_status
-#log "logwatch"
-#${SCRIPTBIN}/logwatch
-#log "mtail"
-#${SCRIPTBIN}/mtail
+log "update"
+${SCRIPTBIN}/update
+log "system status"
+${SCRIPTBIN}/system_status
+log "logwatch"
+${SCRIPTBIN}/logwatch
+log "mtail"
+${SCRIPTBIN}/mtail
 
 
 
