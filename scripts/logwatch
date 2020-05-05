@@ -2,8 +2,8 @@
 
 title logwatch
 
-CHECK=$(sudo $SDOFLAG /usr/sbin/logwatch -v)
-echo $CHECK | grep -e "not found" && { echo "logwatch is a required dependency for ${0}"; exit; }
+CHECK="$(sudo $SDOFLAG which logwatch)"
+[ "${CHECK}" = "" ] && { echo "logwatch is a required dependency for ${0}"; exit; }
 
 LOGWATCH_TS="$AA_CONFIGDIR/logwatch_ts"
 touch "$LOGWATCH_TS"

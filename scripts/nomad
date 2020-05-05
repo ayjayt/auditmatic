@@ -24,8 +24,8 @@ if [ ! -e "$NOMAD_CACERT" ]; then
 	exit
 fi
 
-print Servers
+title Servers
 nomad server members
 
-print Clients
+title Clients
 nomad node status

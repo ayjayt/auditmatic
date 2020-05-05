@@ -64,6 +64,9 @@ ALL_MY_REPOS=$(find $HOME \( -path "*/.git/*" -o -path "$HOME/go/*" \) -prune -o
 gitcheck() {
 		if [ "$FAST" = "true" ]; then
 			git -C ${1} status --short
+			if git -C ${1} remote show origin 2>&1 | grep -qe "local out of date"; then
+				echo "local out of date"
+			fi
 		elif git -C ${1} status --short; then
 			if [ -n "$(git -C ${1} remote)" ]; then
 				git -C ${1} fetch --all | grep -v "Fetching origin"
