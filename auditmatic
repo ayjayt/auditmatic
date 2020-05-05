@@ -121,6 +121,9 @@ done
 
 if [ -z "$AA_CONFIGDIR" ]; then
 	export AA_CONFIGDIR="$HOME/.auditmatic"
+	if [ ! -d "$AA_CONFIGDIR" ]; then
+		mkdir $AA_CONFIGDIR
+	fi
 fi
 
 mkdir -p $AA_CONFIGDIR
