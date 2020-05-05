@@ -7,59 +7,63 @@ REPOS_TS="$AA_CONFIGDIR/repos_ts"
 touch "$REPOS_TS"
 touch "$REPOS_TRACKED"
 touch "$REPOS_IGNORED"
-
+FAST=false
 command -v git &> /dev/null || { echo "Git is a required dependency for ${0}"; exit; }
 
 if chk_int "$REPOS_TS" "60*60*2" || chk_all; then
+	log "not fast."
 	pass
 else
-	echo "Skipping..."
-	exit 0
+	log "FAST!"
+	FAST=true
 fi
-	
-for line in $(cat $REPOS_TRACKED); do
-	if [ -n "$line" ] && [ ! -d "$line" ]; then
-		echo "$line in REPOS_TRACKED doesn't seem to be a repo"
-		select opt in DELETE IGNORE; do
-			case $opt in
-				"DELETE")
-					sed -i "s!${line}\$!!g" $REPOS_TRACKED
-					;;
-				"IGNORE")
-					;;
-				*)
-					echo "Invalid Response"
-					;;
-			esac
-			break
-		done
-	fi
-done
+if [ "${FAST}" = "false" ]; then	
+	for line in $(cat $REPOS_TRACKED); do
+		if [ -n "$line" ] && [ ! -d "$line" ]; then
+			echo "$line in REPOS_TRACKED doesn't seem to be a repo"
+			select opt in DELETE IGNORE; do
+				case $opt in
+					"DELETE")
+						sed -i "s!${line}\$!!g" $REPOS_TRACKED
+						;;
+					"IGNORE")
+						;;
+					*)
+						echo "Invalid Response"
+						;;
+				esac
+				break
+			done
+		fi
+	done
 
-for line in $(cat $REPOS_IGNORED); do
-	if [ -n "$line" ] && [ ! -d "$line" ]; then
-		echo "$line in REPOS_IGNORED doesn't seem to be a repo"
-		select opt in DELETE IGNORE; do
-			case $opt in
-				"DELETE")
-					sed -i "s!${line}\$!!g" $REPOS_IGNORED
-					;;
-				"IGNORE")
-					pass
-					;;
-				*)
-					echo "Invalid Response"
-					;;
-			esac
-			break
-		done
-	fi
-done 
+	for line in $(cat $REPOS_IGNORED); do
+		if [ -n "$line" ] && [ ! -d "$line" ]; then
+			echo "$line in REPOS_IGNORED doesn't seem to be a repo"
+			select opt in DELETE IGNORE; do
+				case $opt in
+					"DELETE")
+						sed -i "s!${line}\$!!g" $REPOS_IGNORED
+						;;
+					"IGNORE")
+						pass
+						;;
+					*)
+						echo "Invalid Response"
+						;;
+				esac
+				break
+			done
+		fi
+	done 
+fi
 
 ALL_MY_REPOS=$(find $HOME \( -path "*/.git/*" -o -path "$HOME/go/*" \) -prune -o -type d -name ".git" -exec dirname {} \;)
 
 gitcheck() {
-		if git -C ${1} status --short; then
+		if [ "$FAST" = "true" ]; then
+			git -C ${1} status --short
+		elif git -C ${1} status --short; then
 			if [ -n "$(git -C ${1} remote)" ]; then
 				git -C ${1} fetch --all | grep -v "Fetching origin"
 			else
@@ -94,6 +98,9 @@ done <<< "$ALL_MY_REPOS"
 echo "You can browse lists in: $REPOS_TRACKED and $REPOS_IGNORED"
 
 if [ ! $AA_INTERACTIVE = "true" ]; then
+	exit
+fi
+if [ "${FAST}" = "true" ]; then
 	exit
 fi
 for REPO in $NEWREPOS; do
