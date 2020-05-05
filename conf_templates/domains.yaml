@@ -1,0 +1,11 @@
+domains:
+  google.com:
+    provider: google
+    description: example domain
+
+ips:
+  1.1.1.1:
+    name: cloudflare dns
+    provider: cloudflare
+    ipv6: 
+    description: example ip
