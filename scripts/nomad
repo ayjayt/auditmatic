@@ -29,3 +29,6 @@ nomad server members
 
 title "Nomad Clients"
 nomad node status
+
+title "Nomad Jobs"
+nomad job status
