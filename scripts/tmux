@@ -1,6 +1,6 @@
 #!/bin/bash
 title tmux
 
-command -v tmux &> /dev/null || { echo "nomad is a required dependency for ${0}"; exit; }
+command -v tmux &> /dev/null || { echo "tmux is a required dependency for ${0}"; exit; }
 
 tmux ls
