@@ -355,8 +355,10 @@ if ((keys %ipt) and $ListByHost) {
                } else {
                   $outputMain .= "  From $from - $fromHostCount " .  ( ($fromHostCount > 1) ? "packets" : "packet" ) .  " to " ;
                   foreach $protocol ( keys %port_list ) {
-                     if ( $#{ keys %{$port_list { $protocol } } } > 10 ) {
-                        $outputMain .= $#{ $port_list{ $protocol } } ." $protocol ports";
+                     @keys = keys %{$port_list { $protocol}};
+                     $size = @keys;
+                     if ( $size > 10 ) {
+                        $outputMain .= "$size $protocol ports";
                      } else {
                         $outputMain .= "$protocol(" . join(",", sort compNum keys %{ $port_list{ $protocol } } ) . ") " ;
                      }
