@@ -1,5 +1,5 @@
 #!/bin/bash
-
+if [ ${AUDITMATIC} == "no" ]; then exit 0; fi 
 log() {
 	echo $(date  -u)"-$0-$$-$1" >> ${AA_CONFIGDIR}/log
 }
