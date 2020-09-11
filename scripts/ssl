@@ -3,6 +3,12 @@
 title "Examine SSL and Domains"
 
 SSL_TS="$AA_CONFIGDIR/SSL_ts"
+DOMAINS_URL="$AA_CONFIGDIR/domains_url"
+if [ -f "$DOMAINS_URL" ]; then
+	DOMAINS_URL="$(cat $DOMAINS_URL)"
+else
+	DOMAINS_URL=""
+fi
 touch "$SSL_TS"
 
 if chk_int "$SSL_TS" "60*60*24" || chk_all; then
@@ -13,6 +19,15 @@ else
 fi
 
 command -v domanager &> /dev/null || { echo "domanager is a required dependency for ${0}"; exit; }
+if [ -n "$DOMAINS_URL" ]; then
+	wget -O temp.yaml "$DOMAINS_URL" || rm temp.yaml
+	if [ -d "$AA_CONFIGDIR" -a -f "temp.yaml" ]; then
+		mv temp.yaml $AA_CONFIGDIR/domains.yaml
+	fi
+	if [ -f "temp.yaml" ]; then
+		rm temp.yaml
+	fi
+fi
 
 ( cd $AA_CONFIGDIR && domanager )
 echo '
