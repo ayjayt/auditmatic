@@ -98,10 +98,13 @@ new_sleeper() {
 	disown ${SLEEPER_PID}
 }
 
-while getopts 's:c:va' OPTION; do
+while getopts 'i:s:c:va' OPTION; do
 	case "$OPTION" in
 		s)
 			export SCRIPTBIN="${OPTARG}"
+			;;
+		i)
+			export SCRIPT="${OPTARG}"
 			;;
 		a)
 			export AA_ALL=true
@@ -165,29 +168,40 @@ if [ "$AA_INTERACTVE" = "false" ]; then
 	export SUDOFLAG=' -n '
 fi
 
-log "basic"
-${SCRIPTBIN}/basic
-log "tmux"
-${SCRIPTBIN}/tmux
-log "ufw"
-${SCRIPTBIN}/ufw
-log "go lastest"
-${SCRIPTBIN}/go_latest_release 
-log "nomad"
-${SCRIPTBIN}/nomad
-log "domains"
-${SCRIPTBIN}/ssl
-log "find repos"
-${SCRIPTBIN}/find_repos
-log "update"
-${SCRIPTBIN}/update
-log "system status"
-${SCRIPTBIN}/system_status
-log "logwatch"
-${SCRIPTBIN}/logwatch
-log "mtail"
-${SCRIPTBIN}/mtail
-
+if [ -z "$SCRIPT" -o "$SCRIPT" = "basic" ]; then
+	log "basic"
+	${SCRIPTBIN}/basic
+elif [ -z "$SCRIPT" -o "$SCRIPT" = "tmux" ]; then
+	log "tmux"
+	${SCRIPTBIN}/tmux
+elif [ -z "$SCRIPT" -o "$SCRIPT" = "ufw" ]; then
+	log "ufw"
+	${SCRIPTBIN}/ufw
+elif [ -z "$SCRIPT" -o "$SCRIPT" = "go" ]; then
+	log "go (lastest)"
+	${SCRIPTBIN}/go_latest_release 
+elif [ -z "$SCRIPT" -o "$SCRIPT" = "nomad" ]; then
+	log "nomad"
+	${SCRIPTBIN}/nomad
+elif [ -z "$SCRIPT" -o "$SCRIPT" = "domains" ]; then
+	log "domains"
+	${SCRIPTBIN}/ssl
+elif [ -z "$SCRIPT" -o "$SCRIPT" = "repos" ]; then
+	log "repos"
+	${SCRIPTBIN}/find_repos
+elif [ -z "$SCRIPT" -o "$SCRIPT" = "update" ]; then
+	log "update"
+	${SCRIPTBIN}/update
+elif [ -z "$SCRIPT" -o "$SCRIPT" = "systemstat" ]; then
+	log "systemstat"
+	${SCRIPTBIN}/system_status
+elif [ -z "$SCRIPT" -o "$SCRIPT" = "logwatch" ]; then
+	log "logwatch"
+	${SCRIPTBIN}/logwatch
+elif [ -z "$SCRIPT" -o "$SCRIPT" = "mtail" ]; then
+	log "mtail"
+	${SCRIPTBIN}/mtail
+fi
 
 
 title Done 
