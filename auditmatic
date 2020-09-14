@@ -171,34 +171,44 @@ fi
 if [ -z "$SCRIPT" -o "$SCRIPT" = "basic" ]; then
 	log "basic"
 	${SCRIPTBIN}/basic
-elif [ -z "$SCRIPT" -o "$SCRIPT" = "tmux" ]; then
+fi
+if [ -z "$SCRIPT" -o "$SCRIPT" = "tmux" ]; then
 	log "tmux"
 	${SCRIPTBIN}/tmux
-elif [ -z "$SCRIPT" -o "$SCRIPT" = "ufw" ]; then
+fi
+if [ -z "$SCRIPT" -o "$SCRIPT" = "ufw" ]; then
 	log "ufw"
 	${SCRIPTBIN}/ufw
-elif [ -z "$SCRIPT" -o "$SCRIPT" = "go" ]; then
+fi
+if [ -z "$SCRIPT" -o "$SCRIPT" = "go" ]; then
 	log "go (lastest)"
 	${SCRIPTBIN}/go_latest_release 
-elif [ -z "$SCRIPT" -o "$SCRIPT" = "nomad" ]; then
+fi
+if [ -z "$SCRIPT" -o "$SCRIPT" = "nomad" ]; then
 	log "nomad"
 	${SCRIPTBIN}/nomad
-elif [ -z "$SCRIPT" -o "$SCRIPT" = "domains" ]; then
+fi
+if [ -z "$SCRIPT" -o "$SCRIPT" = "domains" ]; then
 	log "domains"
 	${SCRIPTBIN}/ssl
-elif [ -z "$SCRIPT" -o "$SCRIPT" = "repos" ]; then
+fi
+if [ -z "$SCRIPT" -o "$SCRIPT" = "repos" ]; then
 	log "repos"
 	${SCRIPTBIN}/find_repos
-elif [ -z "$SCRIPT" -o "$SCRIPT" = "update" ]; then
+fi
+if [ -z "$SCRIPT" -o "$SCRIPT" = "update" ]; then
 	log "update"
 	${SCRIPTBIN}/update
-elif [ -z "$SCRIPT" -o "$SCRIPT" = "systemstat" ]; then
+fi
+if [ -z "$SCRIPT" -o "$SCRIPT" = "systemstat" ]; then
 	log "systemstat"
 	${SCRIPTBIN}/system_status
-elif [ -z "$SCRIPT" -o "$SCRIPT" = "logwatch" ]; then
+fi
+if [ -z "$SCRIPT" -o "$SCRIPT" = "logwatch" ]; then
 	log "logwatch"
 	${SCRIPTBIN}/logwatch
-elif [ -z "$SCRIPT" -o "$SCRIPT" = "mtail" ]; then
+fi
+if [ -z "$SCRIPT" -o "$SCRIPT" = "mtail" ]; then
 	log "mtail"
 	${SCRIPTBIN}/mtail
 fi
