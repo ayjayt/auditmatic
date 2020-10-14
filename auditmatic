@@ -7,9 +7,10 @@ export -f log
 
 
 usage() {
-	echo "USAGE: "$'\t'"$(basename $0) [-c CONFIG_DIR] [-a] [-v]"
+	echo "USAGE: "$'\t'"$(basename $0) [-c CONFIG_DIR] [-a] [-v] [-i SCRIPTNAME]"
 	echo "-v : verbose output"
 	echo "-s : specify SCRIPTBIN, the folder with scripts"
+	echo "-i : specify SCRIPT, the script you want to run"
 	echo "-c : specify AA_CONFIGDIR, which stores states such as the last time a script was run"
 	echo "-a : do all even if not time yet"
 }
