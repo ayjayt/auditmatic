@@ -79,7 +79,8 @@ gitcheck() {
 					git -C ${1} status | head -n 2 | tail -n 1
 				fi
 			else 
-				echo "This repo is in a detached head state, either a submodule or the working tree is checked out"
+				echo "This repo is in a detached head state, either a submodule or the working tree isn't checked out"
+				# this is because @{upstream} refers to a branch. 
 			fi
 		else
 			sed -i "s/${1}\$//g" $REPOS_TRACKED
